@@ -8,11 +8,11 @@
 * install and run my SD backend: https://github.com/amotile/stable-diffusion-backend
   * Uses https://github.com/AUTOMATIC1111/stable-diffusion-webui as the image generator
 * in project root run:
-* `yarn`
-* `yarn start`
+* `npm install`
+* `npm start`
 
 # Alt
-* `yarn`
-* `yarn build`
+* `npm install`
+* `npm build`
 * host the resulting build folder as a static website
 
