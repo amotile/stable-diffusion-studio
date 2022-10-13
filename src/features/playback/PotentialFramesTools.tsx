@@ -1,15 +1,17 @@
 import {updateTheStore, useTheStore} from "@features/app/mainStore";
-import {Box, Button, Flex, Textarea} from "@chakra-ui/react";
+import {Box, Button, Flex, Progress, Textarea} from "@chakra-ui/react";
 import {PotentialFrame, useGeneration} from "@features/generation";
 import _ from "lodash";
 import shallow from "zustand/shallow";
-import {memo} from "react";
+import {memo, useState} from "react";
 
 export const PotentialFramesTools = memo(({seqId}: { seqId: string }) => {
 
     let {enqueue, collectImages} = useGeneration();
     let potentialFrames = useTheStore(s => s.playback.potentialFrames[seqId] || []);
     let processing = useTheStore(s => potentialFrames.map(pot => s.processingItem[s.potentialToProcessing[pot.id]]), shallow)
+    let [save_folder, set_save_folder] = useState("")
+    let [isCollecting, set_isCollecting] = useState(false)
 
 
     async function add(count: number) {
@@ -81,8 +83,23 @@ export const PotentialFramesTools = memo(({seqId}: { seqId: string }) => {
             })}
 
         </Flex>
-        <Flex>
-            <Button onClick={() => collectImages(files)}>Collect Images ({files.length})</Button>
+        <Flex alignItems={"center"} gap={2}>
+            <Button onClick={async () => {
+                try{
+                    set_isCollecting(true)
+                    const x = await collectImages(files)
+                    console.log(x)
+                    set_save_folder(x.folder)
+
+                } finally {
+                    set_isCollecting(false)
+                }
+            }
+            }>Collect Images ({files.length})</Button>
+            {save_folder}
         </Flex>
+        {isCollecting && <Progress size={"sm"} w={"100%"} isIndeterminate/>}
+
+
     </Flex>
 })

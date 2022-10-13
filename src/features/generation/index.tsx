@@ -18,6 +18,7 @@ export function generateFrameId(input: InputItem){
 export interface PotentialFrame{
     id: string
     input: InputItem
+    keyFrames?: number
 }
 
 export function useGeneration() {

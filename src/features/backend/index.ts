@@ -15,7 +15,7 @@ export interface BackendConnection {
     enqueue(items: InputItem[]): Promise<string[]>
     stop(): Promise<void>
     clear(): Promise<void>
-    collectImages(images: String[]) :Promise<void>
+    collectImages(images: String[]) :Promise<{folder:string}>
 }
 
 export function backendConnection({
@@ -98,6 +98,7 @@ export function backendConnection({
                     'Content-Type': 'application/json',
                 }, body: JSON.stringify(images)
             });
+            return await response.json() as any
         },
     }
 }

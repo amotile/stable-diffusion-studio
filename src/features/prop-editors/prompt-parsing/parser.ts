@@ -154,6 +154,8 @@ export function parseInternal(tokens: Tokens): Node[] {
         else
             result.push(tokens.current!!)
     }
+    if(result.length===0)
+        return [""]
     return result
 }
 

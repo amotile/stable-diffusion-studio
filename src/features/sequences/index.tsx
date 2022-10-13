@@ -55,6 +55,7 @@ export function createSequence() {
 
 
         addRow('prompt', "Prompt", 'prompt', x2imageDefaults.prompt)
+        addRow('negativePrompt', "Negative Prompt", 'prompt', x2imageDefaults.negativePrompt)
         addRow('seed', "Seed", 'seed', randomSeed())
         addRow('steps', "Steps", 'steps', x2imageDefaults.steps)
         addRow('cfg', "Cfg Scale", 'cfg', x2imageDefaults.cfg)

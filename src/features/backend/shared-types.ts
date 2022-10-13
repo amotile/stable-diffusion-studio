@@ -16,6 +16,7 @@ export interface BaseProcessingItem<IN extends BaseInputItem, OUT> {
 
 export interface X2ImgInput extends BaseInputItem{
     prompt: string
+    negativePrompt: string
     width: number
     height: number
     cfg: string // decimal number

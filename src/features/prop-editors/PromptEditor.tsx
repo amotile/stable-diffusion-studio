@@ -29,6 +29,7 @@ export const promptEditor: PropEditor<string,string> = {
     display: (v) => "",
     convert: v=>v,
     interpolate: (left, right, blend) => {
+        debugger
         const result = merge(left, right, blend).result
         return result
     }

@@ -38,11 +38,30 @@ const SequenceKeyFrameView = memo(({id, seqId, rowId, editor}: { seqId: string, 
     const {isOpen, onToggle, onClose} = useDisclosure()
     const ref = useDragRef({
         disabled: keyFrame.locked,
-        onDragStart: () => {
+        onDragStart: (event) => {
             const start = keyFrame.frame
+
+            let targets = [id]
+            if(event.shiftKey){
+                targets = []
+                let s = useTheStore.getState();
+                for (const row of s.sequence[seqId].rows) {
+                    for (const frame of s.sequenceRow[row].keyFrames) {
+                        if(s.sequenceKeyFrame[frame].frame === start){
+                            targets.push(frame)
+                        }
+                    }
+                }
+            }
+
             return {
                 onDrag: (totalX, totalY, event) => {
-                    updateTheStore(s => s.sequenceKeyFrame[id].frame = Math.round(start + pixToFrame(totalX)))
+                    updateTheStore(s => {
+                        let newFrame = Math.round(start + pixToFrame(totalX));
+                        for (const target of targets) {
+                            s.sequenceKeyFrame[target].frame = newFrame
+                        }
+                    })
                     if(Math.abs(totalY) > 150){
                         deleteKeyFrame(rowId, id)
                     }

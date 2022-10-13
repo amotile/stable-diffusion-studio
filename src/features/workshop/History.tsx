@@ -12,7 +12,7 @@ export function History(){
     const c = "rgb(0,0,0,0.5)"
     const s = "2xs"
     return <Flex flexWrap={"wrap"}>
-        {workshopHistory.map(h => {
+        {workshopHistory.map((h,i) => {
             let border = '1px solid black'
             if (hover?.id === h.id)
                 border = "1px solid #1B5169"
@@ -26,6 +26,7 @@ export function History(){
 
             const bSize= 100
             return <Flex
+                key={i}
                 pr={4+"px"} pb={4+"px"}
                 style={{width: bSize+4, height: bSize+4}}
                 onMouseOver={() => updateTheStore(s => s.workshop.hover = h.id)}

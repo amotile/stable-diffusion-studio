@@ -13,6 +13,7 @@ import {FrameTrack} from "@features/playback/FrameTrack";
 export const x2imageDefaults: any = {
     type: "txt2img",
     prompt: 'fantasy landscape',
+    negativePrompt: '',
     cfg: '7',
     width: 512,
     height: 512,
@@ -28,10 +29,13 @@ export function createPotentialFrame(sequenceId: string, frame: number, variatio
     const sortedFrameForRows = rows.map(row => sortedKeyFrames(s, row.id))
     const genInput = { ...x2imageDefaults }
 
+    let keyFrames = 0
     for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         const sortedFrames = sortedFrameForRows[i];
-        let { value } = getRowValueForFrame(frame, editors[row.type], sortedFrames);
+        let { value, onFrame } = getRowValueForFrame(frame, editors[row.type], sortedFrames);
+        if(onFrame)
+            keyFrames++
         genInput[row.key] = value
     }
 
@@ -39,7 +43,7 @@ export function createPotentialFrame(sequenceId: string, frame: number, variatio
 
     const id = generateFrameId(genInput)
 
-    return { id, input: genInput }
+    return { id, input: genInput, keyFrames }
 }
 
 const calculateFrames = _.debounce(() => {
@@ -52,22 +56,26 @@ const calculateFrames = _.debounce(() => {
 
                 const maxFrame = _.max(sortedFrameForRows.map(r => _.last(r)?.frame)) || 0
                 const genFrames: PotentialFrame[] = []
+
                 for (let currentFrame = 0; currentFrame <= maxFrame; currentFrame++) {
                     // console.log("Frame,", currentFrame)
                     const genInput = { ...x2imageDefaults }
-
+                    let keyFrames =0
                     for (let i = 0; i < rows.length; i++) {
                         const row = rows[i];
                         const sortedFrames = sortedFrameForRows[i];
-                        let { value } = getRowValueForFrame(currentFrame, editors[row.type], sortedFrames);
+                        let { value, onFrame } = getRowValueForFrame(currentFrame, editors[row.type], sortedFrames);
                         genInput[row.key] = value
+                        if(onFrame)
+                            keyFrames++
                     }
 
                     const id = generateFrameId(genInput)
 
                     genFrames.push({
                         id,
-                        input: genInput
+                        input: genInput,
+                        keyFrames
                     })
                 }
                 s.playback.potentialFrames[key] = genFrames
