@@ -32,22 +32,23 @@ export function WorkshopView() {
     const {enqueueVariations} = useWorkshop()
     const sequence = useTheStore(s => s.sequence[s.currentSequence || ''])
     const rows = useTheStore(s => doLookup(sequence?.rows || [], s.sequenceRow))
-    const rowLookup = _.keyBy(rows, 'type')
+    const rowLookup = _.keyBy(rows, 'key')
 
     const hover = useTheStore(s => s.workshop.items[s.workshop.hover || ''])
     const selected = useTheStore(s => s.workshop.items[s.workshop.selected || ''])
 
     const show = hover || selected
 
-    function row(label: string, type: string) {
-        let value = show.input[type as keyof InputItem];
-        return sequence && <FieldEditor enqueueVariations={(variations)=>enqueueVariations(show.input, variations)} label={label} value={value} seqId={sequence.id} rowId={rowLookup[type].id}/>
+    function row(label: string, key: string) {
+        let value = show.input[key as keyof InputItem];
+        return sequence && <FieldEditor enqueueVariations={(variations)=>enqueueVariations(show.input, variations)} label={label} value={value} seqId={sequence.id} rowId={rowLookup[key].id}/>
     }
 
     return <Flex direction={"column"} gap={2}>
         <Flex minHeight={6} direction={"column"} gap={2}>
             {show && <>
                 {row("Prompt", "prompt")}
+                {row("- Prompt", "negativePrompt")}
             </>
             }
         </Flex>

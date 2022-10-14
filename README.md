@@ -7,7 +7,8 @@
 # How to run
 
 ## Using the binary
-* Just run the executable (.exe file)
+* Place the custom scripts from here the release (the .py files) into your `<AUTOMATIC1111>/scripts` folder
+* Run the executable (e.g. .exe file)
 * In your browser go to `http://localhost:5533`
 
 
