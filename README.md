@@ -9,7 +9,7 @@
 ## Using the binary
 * Place the custom scripts from here the release (the .py files) into your `<AUTOMATIC1111>/scripts` folder
 * Run the executable (e.g. .exe file)
-* In your browser go to `http://localhost:5533`
+* In your browser go to `http://localhost:4000`
 
 
 ## Hosted by backend
@@ -25,6 +25,7 @@
 * in project root run:
 * `npm install`
 * `npm start`
+* * In your browser go to `http://localhost:5533`
 
 
 # UI Tips
