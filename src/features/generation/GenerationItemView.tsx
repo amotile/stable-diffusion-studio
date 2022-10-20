@@ -5,6 +5,7 @@ import {BiBrain} from "react-icons/bi";
 import {FaHourglass} from "react-icons/fa";
 import {VscWarning} from "react-icons/vsc";
 
+const HTTP_URL = String(process.env.REACT_APP_HTTP_URL)
 
 export function ProcessingItemView({pot}: { pot:PotentialFrame }) {
     let {enqueue} = useGeneration();
@@ -18,7 +19,7 @@ export function ProcessingItemView({pot}: { pot:PotentialFrame }) {
                 <span><VscWarning/></span>
             </Tooltip>
         else if (item.output)
-            content = <img src={'http://localhost:4000/image/' + item.output?.result}/>
+            content = <img src={HTTP_URL+'/image/' + item.output?.result}/>
         else
             content = <FaHourglass/>
     }
