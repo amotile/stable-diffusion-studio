@@ -3,6 +3,10 @@ import {Lookup} from "@features/app";
 import _ from "lodash";
 
 
+// Import environment variables REACT_APP_DOMAIN from .env dotenv file
+const HTTP_URL = String(process.env.REACT_APP_HTTP_URL)
+const SOCKETURL = String(process.env.REACT_APP_SOCKETURL)
+
 export type ConnectionStatus = 'idle' | 'connecting' | 'connected'
 export interface Stats{
     queueDepth: number
@@ -26,8 +30,8 @@ export function backendConnection({
                                       getKnown,
                                       statsChanged
                                   }: BackendParams): BackendConnection {
-    const httpUrl = 'http://' + server + ':4000'
-    const socketUrl = 'ws://' + server + ':4001'
+    const httpUrl = HTTP_URL
+    const socketUrl = SOCKETURL
 
     let ws: WebSocket | undefined = undefined
     let timeout = 0
