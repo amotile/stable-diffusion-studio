@@ -8,6 +8,7 @@
 
 ## Using the binary
 * Place the custom scripts from here the release (the .py files) into your `<AUTOMATIC1111>/scripts` folder
+* Restart AUTOMATIC1111 and make sure that is working like normal. 
 * Run the executable (e.g. .exe file)
 * In your browser go to `http://localhost:4000`
 
@@ -31,3 +32,13 @@
 # UI Tips
 * You can remove keyframes by moving them up or down far enough
 * If you hold shift when moving a keyframe you move the whole column or keyframes
+
+
+# How to build the release package (todo: simplify)
+* Compile frontend
+  * studio: `npm run build`
+* Compile backend
+  * backend: `npm run build`
+* Copy frontend/build -> backend/frontend
+* Make binaries
+  * backend: `npm run dist`
