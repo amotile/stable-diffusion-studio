@@ -7,9 +7,6 @@ import {memo, useState} from "react";
 
 export const PotentialFramesTools = memo(({seqId}: { seqId: string }) => {
 
-    // import REACT_APP_HTTP_URL from ".env";
-    const HTTP_URL = String(process.env.REACT_APP_HTTP_URL)
-
     let {enqueue, collectImages} = useGeneration();
     let potentialFrames = useTheStore(s => s.playback.potentialFrames[seqId] || []);
     let processing = useTheStore(s => potentialFrames.map(pot => s.processingItem[s.potentialToProcessing[pot.id]]), shallow)
@@ -101,7 +98,6 @@ export const PotentialFramesTools = memo(({seqId}: { seqId: string }) => {
             }>Collect Images ({files.length})</Button>
             {save_folder}
         </Flex>
-        <a href={HTTP_URL + '/getZip'}>Download</a>
         {isCollecting && <Progress size={"sm"} w={"100%"} isIndeterminate/>}
 
 
